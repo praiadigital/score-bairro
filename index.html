@@ -1,47 +1,77 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Score de Bairro — compare bairros do litoral lado a lado</title>
-<meta name="description" content="Notas de 0 a 10 para bairros do litoral: praia, serviços, segurança, mobilidade e potencial de investimento. Satélite da rede praia.digital">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Score Bairro | Praia Digital</title>
+<meta name="description" content="Avalie qualquer bairro do litoral: localização, serviços, praia e potencial — score de 0 a 100. Satélite de praia.digital.">
 <style>
-body{margin:0;font-family:system-ui,sans-serif;background:#f5f3ff;color:#2e1065;min-height:100vh}
-header{padding:24px;text-align:center;background:linear-gradient(120deg,#6d28d9,#8b5cf6);color:#fff}
-nav a{color:#fde68a;margin:0 8px;text-decoration:none;font-size:14px}
-.wrap{max-width:800px;margin:auto;padding:24px}
-.pickers{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px}
-select{width:100%;padding:12px;border-radius:10px;border:2px solid #ddd6fe;font-size:16px;background:#fff}
-.vs{display:grid;grid-template-columns:1fr 60px 1fr;gap:10px;align-items:center;background:#fff;border-radius:14px;padding:14px;margin:10px 0;box-shadow:0 4px 14px rgba(109,40,217,.08)}
-.vs .cat{text-align:center;font-size:13px;color:#6d28d9;font-weight:700}
-.score{font-size:22px;font-weight:800;text-align:center}
-.win{color:#16a34a}.lose{color:#dc2626}
-.total{background:linear-gradient(120deg,#6d28d9,#8b5cf6);color:#fff;border-radius:16px;padding:18px;text-align:center;font-size:19px;margin-top:16px}
-footer{padding:20px;text-align:center;font-size:13px}
-footer a{color:#6d28d9}
-</style></head>
+body{font-family:system-ui,-apple-system,sans-serif;margin:0;background:#f8fafc;color:#0f172a;line-height:1.6}
+.hero{background:linear-gradient(135deg,#1e3a8a,#6366f1);color:#fff;padding:50px 20px;text-align:center}
+.container{max-width:1000px;margin:0 auto;padding:30px 20px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.card{background:#fff;border-radius:12px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.cta{display:inline-block;background:#fff;color:#0c4a6e;padding:10px 22px;border-radius:8px;text-decoration:none;font-weight:700;margin:6px}
+button{background:#0284c7;color:#fff;border:none;padding:10px 18px;border-radius:8px;font-weight:700;cursor:pointer}
+input,select,textarea{width:100%;padding:10px;border:1px solid #cbd5e1;border-radius:8px;margin:6px 0;font-family:inherit}
+footer{text-align:center;padding:24px;color:#64748b;font-size:.9em}
+.bar{height:14px;border-radius:7px;background:linear-gradient(90deg,#0ea5e9,#0369a1)}
+input[type=range]{padding:0}
+</style>
+</head>
 <body>
-<header><h1>🏆 Score de Bairro</h1><p>Qual bairro ganha? Compare lado a lado</p>
-<nav><a href="https://praia.digital">Praia Digital</a><a href="https://praia.digital/radar-precos">Radar de Preços</a><a href="https://praia.digital/mapa-inteligente">Mapa</a><a href="https://praia.digital/apps">Todos os apps</a></nav></header>
-<div class="wrap">
-<div class="pickers"><select id="a" onchange="calc()"></select><select id="b" onchange="calc()"></select></div>
-<div id="rows"></div><div class="total" id="tot"></div>
+<nav style="background:#0c4a6e;padding:12px 20px;display:flex;gap:14px;flex-wrap:wrap;font-family:system-ui,sans-serif">
+<a style="color:#e0f2fe;text-decoration:none;font-weight:600" href="https://praia.digital/">🌊 Praia Digital</a>
+<a style="color:#e0f2fe;text-decoration:none;font-weight:600" href="https://praiadigital.github.io/apps/">Hub</a>
+<a style="color:#e0f2fe;text-decoration:none;font-weight:600" href="https://praiadigital.github.io/hermes-agents/">Hermes</a>
+<a style="color:#e0f2fe;text-decoration:none;font-weight:600" href="https://praiadigital.github.io/area-anfitriao/">Anfitrião</a>
+<a style="color:#e0f2fe;text-decoration:none;font-weight:600" href="https://praiadigital.github.io/simulador-roi/">ROI</a>
+<a style="color:#e0f2fe;text-decoration:none;font-weight:600" href="https://praiadigital.github.io/simulador-credito/">Crédito</a>
+<a style="color:#e0f2fe;text-decoration:none;font-weight:600" href="https://praiadigital.github.io/guia-litoral/">Guia</a>
+<a style="color:#e0f2fe;text-decoration:none;font-weight:600" href="https://praiadigital.github.io/calculadoras/">Calculadoras</a>
+<a style="color:#e0f2fe;text-decoration:none;font-weight:600" href="https://praiadigital.github.io/radar-precos/">Radar</a>
+<a style="color:#e0f2fe;text-decoration:none;font-weight:600" href="https://praiadigital.github.io/mapa-investidor/">Mapa</a>
+<a style="color:#e0f2fe;text-decoration:none;font-weight:600" href="https://praiadigital.github.io/concierge-ia/">Concierge</a>
+<a style="color:#e0f2fe;text-decoration:none;font-weight:600" href="https://praiadigital.github.io/checklist-anfitriao/">Checklist</a>
+<a style="color:#e0f2fe;text-decoration:none;font-weight:600" href="https://praiadigital.github.io/termometro-mercado/">Termômetro</a>
+<a style="color:#e0f2fe;text-decoration:none;font-weight:600" href="https://praiadigital.github.io/alerta-ofertas/">Ofertas</a>
+<a style="color:#e0f2fe;text-decoration:none;font-weight:600" href="https://praiadigital.github.io/gerador-anuncio/">Anúncios</a>
+<a style="color:#e0f2fe;text-decoration:none;font-weight:600" href="https://praiadigital.github.io/quiz-praia-ideal/">Quiz</a>
+<a style="color:#e0f2fe;text-decoration:none;font-weight:600" href="https://praiadigital.github.io/precificador-temporada/">Precificador</a>
+<a style="color:#e0f2fe;text-decoration:none;font-weight:600" href="https://praiadigital.github.io/tour-360/">Tour 360</a>
+<a style="color:#e0f2fe;text-decoration:none;font-weight:600" href="https://praiadigital.github.io/fluxo-caixa/">Caixa</a>
+<a style="color:#e0f2fe;text-decoration:none;font-weight:600" href="https://praiadigital.github.io/decor-praia/">Decor</a>
+<a style="color:#e0f2fe;text-decoration:none;font-weight:600" href="https://praiadigital.github.io/open-house/">Open House</a>
+<a style="color:#e0f2fe;text-decoration:none;font-weight:600" href="https://praiadigital.github.io/score-bairro/">Score Bairro</a>
+<a style="color:#e0f2fe;text-decoration:none;font-weight:600" href="https://praiadigital.github.io/match-praia/">Match Praia</a>
+<a style="color:#e0f2fe;text-decoration:none;font-weight:600" href="https://praiadigital.github.io/temporada-pro/">Temporada Pro</a>
+<a style="color:#e0f2fe;text-decoration:none;font-weight:600" href="https://praiadigital.github.io/marea/">Maréa</a>
+</nav>
+<div class="hero"><h1>📍 Score Bairro</h1><p>Avalie a qualidade de um bairro em 6 critérios e receba um score de 0 a 100 com veredito.</p>
+<a class="cta" href="https://praiadigital.github.io/mapa-investidor/">🗺️ Comparar cidades no Mapa</a></div>
+<div class="container"><div class="grid">
+<div class="card"><h3>Avalie de 0 a 10</h3>
+<label>🏖️ Distância da praia</label><input type="range" min="0" max="10" value="8" id="c1" oninput="calc()">
+<label>🛒 Serviços e comércio</label><input type="range" min="0" max="10" value="7" id="c2" oninput="calc()">
+<label>🔒 Segurança percebida</label><input type="range" min="0" max="10" value="6" id="c3" oninput="calc()">
+<label>🚗 Acesso e mobilidade</label><input type="range" min="0" max="10" value="7" id="c4" oninput="calc()">
+<label>🌳 Qualidade urbana</label><input type="range" min="0" max="10" value="6" id="c5" oninput="calc()">
+<label>📈 Potencial de valorização</label><input type="range" min="0" max="10" value="8" id="c6" oninput="calc()"></div>
+<div class="card"><h3>Score do bairro</h3><div id="saida"></div>
+<div id="criterios"></div></div>
 </div>
-<footer>Rede <a href="https://praia.digital">praia.digital</a> · <a href="https://praia.digital/qual-praia">Qual Praia?</a> · <a href="https://praia.digital/guia-comprador">Guia do Comprador</a> · <a href="https://praia.digital/checklists-litoral">Checklists</a></footer>
+<div class="card"><h3>🔎 Próximo passo</h3><p>Bairro aprovado? Confira os preços no <a href="https://praiadigital.github.io/radar-precos/">Radar de Preços</a>, cace descontos no <a href="https://praiadigital.github.io/alerta-ofertas/">Alerta de Ofertas</a> e descubra se é sua praia no <a href="https://praiadigital.github.io/quiz-praia-ideal/">Quiz</a>.</p></div>
+</div>
 <script>
-const bairros={
-'Gonzaga (Santos)':{praia:8,servicos:10,seguranca:7,mobilidade:9,invest:9,preco:'12.400'},
-'Boqueirão (Santos)':{praia:9,servicos:9,seguranca:7,mobilidade:9,invest:8,preco:'11.800'},
-'Pitangueiras (Guarujá)':{praia:8,servicos:9,seguranca:6,mobilidade:7,invest:8,preco:'10.900'},
-'Enseada (Guarujá)':{praia:9,servicos:7,seguranca:6,mobilidade:6,invest:7,preco:'8.900'},
-'Riviera (São Sebastião)':{praia:9,servicos:7,seguranca:9,mobilidade:5,invest:10,preco:'15.200'},
-'Maresias (São Sebastião)':{praia:10,servicos:6,seguranca:7,mobilidade:4,invest:9,preco:'13.500'},
-'Canto do Forte (PG)':{praia:7,servicos:8,seguranca:6,mobilidade:8,invest:7,preco:'6.800'},
-'Martim de Sá (Caraguá)':{praia:9,servicos:6,seguranca:7,mobilidade:6,invest:7,preco:'7.200'}};
-const cats=[['praia','🏖️ Praia'],['servicos','🛒 Serviços'],['seguranca','🛡️ Segurança'],['mobilidade','🚌 Mobilidade'],['invest','📈 Investimento']];
-const nomes=Object.keys(bairros);
-a.innerHTML=nomes.map(n=>`<option>${n}</option>`).join('');b.innerHTML=a.innerHTML;b.selectedIndex=4;
-function calc(){const A=bairros[a.value],B=bairros[b.value];let sa=0,sb=0;
-rows.innerHTML=cats.map(c=>{sa+=A[c[0]];sb+=B[c[0]];return `<div class="vs"><div class="score ${A[c[0]]>=B[c[0]]?'win':'lose'}">${A[c[0]]}</div><div class="cat">${c[1]}</div><div class="score ${B[c[0]]>=A[c[0]]?'win':'lose'}">${B[c[0]]}</div></div>`}).join('');
-tot.innerHTML=`${a.value}: <b>${sa}/50</b> &nbsp;⚔️&nbsp; ${b.value}: <b>${sb}/50</b><br><small>R$/m²: ${A.preco} vs ${B.preco} — confira no <a style="color:#fde68a" href="https://praia.digital/radar-precos">Radar de Preços</a></small>`;}
+function calc(){
+const v=[1,2,3,4,5,6].map(i=>+document.getElementById('c'+i).value);
+const nomes=["Praia","Serviços","Segurança","Mobilidade","Qualidade","Valorização"];
+const score=Math.round(v.reduce((a,b)=>a+b,0)/60*100);
+const cor=score>=75?'#16a34a':score>=50?'#f59e0b':'#dc2626';
+document.getElementById('saida').innerHTML=`<p style="font-size:3em;font-weight:800;color:${cor};margin:0">${score}</p><p style="font-weight:700;color:${cor}">${score>=75?'🌟 Bairro excelente':score>=50?'👍 Bom bairro — avalie bem o preço':'⚠️ Pontos de atenção — negocie firme'}</p>`;
+document.getElementById('criterios').innerHTML=nomes.map((n,i)=>`<p style="margin:6px 0;font-size:.9em">${n} <strong>${v[i]}/10</strong></p><div class="bar" style="width:${v[i]*10}%"></div>`).join('');}
 calc();
-</script></body></html>
+</script>
+<footer>© Praia Digital — 2026 — Satélite da rede <a href="https://praia.digital">praia.digital</a> · <a href="https://praiadigital.github.io/apps/">Ver todos os apps</a></footer>
+</body>
+</html>
