@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Score de Bairro — compare bairros do litoral lado a lado</title>
+<meta name="description" content="Notas de 0 a 10 para bairros do litoral: praia, serviços, segurança, mobilidade e potencial de investimento. Satélite da rede praia.digital">
+<style>
+body{margin:0;font-family:system-ui,sans-serif;background:#f5f3ff;color:#2e1065;min-height:100vh}
+header{padding:24px;text-align:center;background:linear-gradient(120deg,#6d28d9,#8b5cf6);color:#fff}
+nav a{color:#fde68a;margin:0 8px;text-decoration:none;font-size:14px}
+.wrap{max-width:800px;margin:auto;padding:24px}
+.pickers{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px}
+select{width:100%;padding:12px;border-radius:10px;border:2px solid #ddd6fe;font-size:16px;background:#fff}
+.vs{display:grid;grid-template-columns:1fr 60px 1fr;gap:10px;align-items:center;background:#fff;border-radius:14px;padding:14px;margin:10px 0;box-shadow:0 4px 14px rgba(109,40,217,.08)}
+.vs .cat{text-align:center;font-size:13px;color:#6d28d9;font-weight:700}
+.score{font-size:22px;font-weight:800;text-align:center}
+.win{color:#16a34a}.lose{color:#dc2626}
+.total{background:linear-gradient(120deg,#6d28d9,#8b5cf6);color:#fff;border-radius:16px;padding:18px;text-align:center;font-size:19px;margin-top:16px}
+footer{padding:20px;text-align:center;font-size:13px}
+footer a{color:#6d28d9}
+</style></head>
+<body>
+<header><h1>🏆 Score de Bairro</h1><p>Qual bairro ganha? Compare lado a lado</p>
+<nav><a href="https://praia.digital">Praia Digital</a><a href="https://praia.digital/radar-precos">Radar de Preços</a><a href="https://praia.digital/mapa-inteligente">Mapa</a><a href="https://praia.digital/apps">Todos os apps</a></nav></header>
+<div class="wrap">
+<div class="pickers"><select id="a" onchange="calc()"></select><select id="b" onchange="calc()"></select></div>
+<div id="rows"></div><div class="total" id="tot"></div>
+</div>
+<footer>Rede <a href="https://praia.digital">praia.digital</a> · <a href="https://praia.digital/qual-praia">Qual Praia?</a> · <a href="https://praia.digital/guia-comprador">Guia do Comprador</a> · <a href="https://praia.digital/checklists-litoral">Checklists</a></footer>
+<script>
+const bairros={
+'Gonzaga (Santos)':{praia:8,servicos:10,seguranca:7,mobilidade:9,invest:9,preco:'12.400'},
+'Boqueirão (Santos)':{praia:9,servicos:9,seguranca:7,mobilidade:9,invest:8,preco:'11.800'},
+'Pitangueiras (Guarujá)':{praia:8,servicos:9,seguranca:6,mobilidade:7,invest:8,preco:'10.900'},
+'Enseada (Guarujá)':{praia:9,servicos:7,seguranca:6,mobilidade:6,invest:7,preco:'8.900'},
+'Riviera (São Sebastião)':{praia:9,servicos:7,seguranca:9,mobilidade:5,invest:10,preco:'15.200'},
+'Maresias (São Sebastião)':{praia:10,servicos:6,seguranca:7,mobilidade:4,invest:9,preco:'13.500'},
+'Canto do Forte (PG)':{praia:7,servicos:8,seguranca:6,mobilidade:8,invest:7,preco:'6.800'},
+'Martim de Sá (Caraguá)':{praia:9,servicos:6,seguranca:7,mobilidade:6,invest:7,preco:'7.200'}};
+const cats=[['praia','🏖️ Praia'],['servicos','🛒 Serviços'],['seguranca','🛡️ Segurança'],['mobilidade','🚌 Mobilidade'],['invest','📈 Investimento']];
+const nomes=Object.keys(bairros);
+a.innerHTML=nomes.map(n=>`<option>${n}</option>`).join('');b.innerHTML=a.innerHTML;b.selectedIndex=4;
+function calc(){const A=bairros[a.value],B=bairros[b.value];let sa=0,sb=0;
+rows.innerHTML=cats.map(c=>{sa+=A[c[0]];sb+=B[c[0]];return `<div class="vs"><div class="score ${A[c[0]]>=B[c[0]]?'win':'lose'}">${A[c[0]]}</div><div class="cat">${c[1]}</div><div class="score ${B[c[0]]>=A[c[0]]?'win':'lose'}">${B[c[0]]}</div></div>`}).join('');
+tot.innerHTML=`${a.value}: <b>${sa}/50</b> &nbsp;⚔️&nbsp; ${b.value}: <b>${sb}/50</b><br><small>R$/m²: ${A.preco} vs ${B.preco} — confira no <a style="color:#fde68a" href="https://praia.digital/radar-precos">Radar de Preços</a></small>`;}
+calc();
+</script></body></html>
